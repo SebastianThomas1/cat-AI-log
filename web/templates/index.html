@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>miralytik</title>
+
+    <link rel="stylesheet" href="/static/lib/skeleton/normalize.css" />
+    <link rel="stylesheet" href="/static/lib/skeleton/skeleton.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<div class="container">
+    <div id="head">
+        <div id="logo">cat-AI-log</div>
+        <form id="search" method="get">
+            <input type="text" name="query" id="query" value="{% if query != None %}{{ query }}{% endif %}"/>
+            <button type="submit" id="search_button">Suche</button>
+            <ul id="settings">
+                <li>
+                    <input type="checkbox" id="include_all" name="include_all" value="y" {% if include_all %}checked{% endif %}>
+                    <label for="include_all">alle Suchwörter einbeziehen</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="correct_spelling" name="correct_spelling" value="y" {% if correct_spelling %}checked{% endif %}>
+                    <label for="correct_spelling">Rechtschreibung korrigieren</label>
+                </li>
+            </ul>
+        </form>
+    </div>
+
+    {% if prediction != None or extracted_features != [] %}
+    <div id="attributes">
+        <h4>Erkannte Merkmale:</h4>
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    {% if prediction != None %}<th>Warengruppe</th>{% endif %}
+                    {% for item in extracted_features %}<th>{{ item[0] }}</th>{% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% if prediction != None %}<td>{{ prediction[0] }} ({{ prediction[1] }})</td>{% endif %}
+                    {% for item in extracted_features %}<td>{{ item[1] }}</td>{% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% if recommendations != [] %}
+    <div id="recommendations">
+        <h4>Ähnliche Artikel in der Datenbank:</h4>
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>Artikel</th><th>Warengruppe</th><th>Gewissheit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recommendation in recommendations %}
+                <tr>
+                    <td>{{ recommendation[0] }}</td><td>{{ recommendation[1] }}</td><td>{{ recommendation[2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+    <!--
+    <div class="container">
+        <ul class="navigation">
+            <li class="navigation-item">
+                <a href="/">Startseite</a>
+            </li>
+            <li class="navigation-item">
+                <a href="/test">Testseite</a>
+            </li>
+        </ul>
+        <div style="clear: both;">&nbsp;</div>
+
+        {% block content %}{% endblock %}
+    </div>
+    -->
+</body>
+</html>

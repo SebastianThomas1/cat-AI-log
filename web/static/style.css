@@ -1,0 +1,45 @@
+#head {
+  width: 100%;
+  margin: 0 auto;
+}
+
+#logo {
+  text-align: center;
+  font-size: 4em;
+}
+
+#search {
+  width: 75%;
+  margin: 0 auto;
+}
+
+#query {
+  width: 80%;
+}
+
+#search_button {
+  float: right;
+  padding: 0;
+  width: 15%;
+}
+
+#settings {
+  width: 100%;
+  text-align: center;
+  list-style-type: none;
+}
+
+#settings li {
+  display: inline-block;
+  margin: auto;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+#settings li label {
+  display: inline-block;
+}
+
+#attributes {
+  margin-bottom: 3em;
+}
