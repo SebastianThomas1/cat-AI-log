@@ -25,7 +25,7 @@ def data_type_info(df):
     
     return info
 
-def handle_data_types(df, int_features=None, float_features=None, bool_features=None, categorical_features=None, ordered_features=None, string_features=None, object_features=None):
+def cast_data_types(df, int_features=None, float_features=None, bool_features=None, categorical_features=None, ordered_features=None, string_features=None, object_features=None):
     if int_features is not None:
         for feature in int_features:
             df[feature] = df[feature].astype('int')
@@ -75,10 +75,14 @@ def handle_data_types(df, int_features=None, float_features=None, bool_features=
         for feature in object_features:
             df[feature] = df[feature].astype('object')
             
-def handle_datetime(df, datetime_features=None, unit=None):
+    return df
+            
+def cast_datetime(df, datetime_features=None, unit=None):
     if datetime_features is not None:
         for feature in datetime_features:
             df[feature] = pd.to_datetime(df[feature], unit=unit)
+    
+    return df
             
 def non_unique_features_of_duplicates(df):
     duplicates = df[df.index.duplicated(keep=False)]
@@ -86,7 +90,44 @@ def non_unique_features_of_duplicates(df):
     number_of_non_unique_values = (number_of_values > 1).sum()
     return np.array(number_of_non_unique_values[number_of_non_unique_values != 0].index)
 
+def engineer_binned(df, bin_data):
+    for (key, (bins, labels)) in bin_data.items():
+        (feature, binned_feature) = key if type(key) == tuple else (key, key + ' bin')
+        df[binned_feature] = pd.cut(df[feature], bins, labels=labels)
     
+    return df
+
+def coarsen_categories(df, coarsen_data):
+    for (key, coarsen_map) in coarsen_data.items():
+        (feature, coarsened_feature) = key if type(key) == tuple else (key, key + ' cat')
+        df[coarsened_feature] = df[feature].map(coarsen_map).astype('category')
+        
+    return df
+
+def lower_quartile(a):
+    return np.percentile(a, 25)
+
+def upper_quartile(a):
+    return np.percentile(a, 75)
+
+def whiskers(a):
+    lq = lower_quartile(a)
+    uq = upper_quartile(a)
+    ir = uq - lq
+    
+    lower_whisker = np.min(a[a >= lq - 1.5*ir])
+    upper_whisker = np.max(a[a <= uq + 1.5*ir])
+    
+    return (lower_whisker, upper_whisker)
+
+def mean_percentage_error(y, y_pred):
+    '''returns mean percentage error'''
+    return np.mean((y - y_pred) / y)
+
+def mean_absolute_percentage_error(y, y_pred):    
+    '''returns mean percentage error'''
+    return np.mean(np.abs((y - y_pred) / y))
+
 #class IntTyper(BaseEstimator, TransformerMixin):
 #
 #    def __init__(self, features):
