@@ -52,6 +52,8 @@ laws = ['11.3', '73.3', '116', '116b', '129', '129a']
 token_lists = [dosage_forms_ifa.index, manufacturers['manufacturer'], laws]
 token_feature_names = ['dosage form', 'manufacturer', 'law']
 
+dosage_forms_dict = dosage_forms_ifa['dosage form'].to_dict()
+
 spelling_corrector = load('objects/spelling_corrector.joblib')
 search_engine = load('objects/search_engine.joblib')
 
@@ -126,4 +128,4 @@ def run():
 
     return render_template('index.html', query=query, include_all=include_all, correct_spelling=correct_spelling,
                            prediction=prediction, extracted_features=extracted_features,
-                           recommendations=recommendations)
+                           recommendations=recommendations, dosage_forms_dict=dosage_forms_dict)
