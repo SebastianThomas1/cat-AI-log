@@ -5,6 +5,9 @@ import numpy as np
 import pandas as pd
 from pandas.api.types import CategoricalDtype
 
+# metrics
+from sklearn.metrics import mean_squared_error
+
 def data_type_info(df):
     '''
     computes a data frame that gives, for each feature, information on its data type, its number of unique
@@ -90,7 +93,16 @@ def non_unique_features_of_duplicates(df):
     number_of_non_unique_values = (number_of_values > 1).sum()
     return np.array(number_of_non_unique_values[number_of_non_unique_values != 0].index)
 
-def engineer_binned(df, bin_data):
+def logarithmize_features(df, to_be_logarithmized, log1p=True):
+    for entry in to_be_logarithmized:
+        (feature, logarithmized_feature) = entry if type(entry) == tuple else (entry, entry + ' log')
+        df[logarithmized_feature] = np.log1p(df[feature]) if log1p else np.log(df[feature])
+    
+    return df
+
+def bin_features(df, bin_data):
+    df = df.copy()
+
     for (key, (bins, labels)) in bin_data.items():
         (feature, binned_feature) = key if type(key) == tuple else (key, key + ' bin')
         df[binned_feature] = pd.cut(df[feature], bins, labels=labels)
@@ -98,11 +110,19 @@ def engineer_binned(df, bin_data):
     return df
 
 def coarsen_categories(df, coarsen_data):
+    df = df.copy()
+
     for (key, coarsen_map) in coarsen_data.items():
         (feature, coarsened_feature) = key if type(key) == tuple else (key, key + ' cat')
         df[coarsened_feature] = df[feature].map(coarsen_map).astype('category')
         
     return df
+
+def rename_columns(df, column_map):
+    return df.rename(column_map, axis=1)
+
+def reindex_columns(df, columns):
+    return df.reindex(columns=columns)
 
 def lower_quartile(a):
     return np.percentile(a, 25)
@@ -119,6 +139,19 @@ def whiskers(a):
     upper_whisker = np.max(a[a <= uq + 1.5*ir])
     
     return (lower_whisker, upper_whisker)
+
+def boxplot_statistics(a):
+    (lower_whisker, upper_whisker) = whiskers(a) 
+
+    return (lower_whisker, lower_quartile(a), np.median(a), upper_quartile(a), upper_whisker)
+
+def root_mean_squared_error(y, y_pred):    
+    '''returns root mean squared error'''
+    return np.sqrt(mean_squared_error(y, y_pred))
+
+def median_absolute_error(y, y_pred):    
+    '''returns median absolute error'''
+    return np.median(np.abs(y - y_pred))
 
 def mean_percentage_error(y, y_pred):
     '''returns mean percentage error'''
