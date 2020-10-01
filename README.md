@@ -31,6 +31,7 @@ Main analysis:
 - [Part 4: Predictive analysis](cat-AI-log_4_predictive_analysis.ipynb)
 - [Part 5: The search engine](cat-AI-log_5_search_engine.ipynb)
 - [Part 6: Visualization](cat-AI-log_6_visualization.ipynb)
+- [Part 7: Unit tests](cat-AI-log_7_unit_tests.ipynb)
 
 Side path Data Mining:
 - [Mining 1: pdf mining of IFA dosage forms](mining/cat-AI-log_mining_1_ifa_dosage_forms.ipynb)
@@ -38,9 +39,9 @@ Side path Data Mining:
 - [Mining 3: Construction of a replacement dictionary from DocMorris to IFA](mining/cat-AI-log_mining_3_replacement_docmorris_ifa.ipynb)
 
 Main development:
-- [Spelling correction](modules/spelling_correction.py)
-- [Search](modules/search.py)
-- [Quotient Extraction](modules/quotient_extraction.py)
+- [Spelling correction](modules/spelling_correction.py) ([Unit tests](tests/tests_quotient_extraction.py))
+- [Search](modules/search.py) ([Unit tests](tests/tests_search.py))
+- [Quotient Extraction](modules/quotient_extraction.py) ([Unit tests](tests/tests_quotient_extraction.py))
 - [Helper](modules/ds.py)
 - [Another rough helper](modules/ds_rough.py)
 
