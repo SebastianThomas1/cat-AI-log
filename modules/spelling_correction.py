@@ -30,6 +30,7 @@ def _edit_dist_init(len1, len2):
         lev[0][j] = j  # row 0: 0,1,2,3,4,...
     return lev
 
+
 # from https://www.nltk.org/_modules/nltk/metrics/distance.html
 @njit
 def _edit_dist_step(lev, i, j, s1, s2, substitution_cost=1, transpositions=False):
@@ -52,6 +53,7 @@ def _edit_dist_step(lev, i, j, s1, s2, substitution_cost=1, transpositions=False
     # pick the cheapest
     lev[i][j] = min(a, b, c, d)
 
+    
 # from https://www.nltk.org/_modules/nltk/metrics/distance.html
 @njit
 def edit_distance(s1, s2, substitution_cost=1, transpositions=False):
@@ -67,9 +69,11 @@ def edit_distance(s1, s2, substitution_cost=1, transpositions=False):
                             transpositions=transpositions)
     return lev[len1][len2]
 
+
 @njit
 def damerau_levenshtein_distance(s1, s2):
     return edit_distance(s1, s2, substitution_cost=1, transpositions=True)
+
 
 class SpellingCorrector(BaseEstimator, TransformerMixin):
     

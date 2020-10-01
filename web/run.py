@@ -18,7 +18,6 @@ from sklearn.pipeline import make_pipeline
 from transformer.cleaning import clean_mira
 from transformer.feature_engineering import extract_features_mira
 
-
 app = Flask(__name__)
 
 mira = pd.read_pickle('data/mira_processed.pickle')

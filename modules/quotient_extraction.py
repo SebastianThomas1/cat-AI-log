@@ -22,30 +22,30 @@ from modules.spelling_correction import edit_distance
 
 
 @njit
-def pairwise_damerau_levenshtein_distances(corpus, dtype=np.int64):
-    n = len(corpus)
+def pairwise_damerau_levenshtein_distances(vocabulary, dtype=np.int64):
+    n = len(vocabulary)
     distances = np.empty((n - 1)*n // 2, dtype=dtype)
 
     k = 0
     for i in range(n):
         for j in range(i):
-            distances[k] = edit_distance(corpus[i], corpus[j], transpositions=True)
+            distances[k] = edit_distance(vocabulary[i], vocabulary[j], transpositions=True)
             k += 1
     
     return distances
 
-def pairwise_damerau_levenshtein_similarities(corpus, distances=None, dtype=np.float64):
-    n = len(corpus)
+def pairwise_damerau_levenshtein_similarities(vocabulary, distances=None, dtype=np.float64):
+    n = len(vocabulary)
     maximum_lengths = np.empty((n - 1)*n // 2, dtype=np.int64)
 
     k = 0
     for i in range(n):
         for j in range(i):
-            maximum_lengths[k] = max(len(corpus[i]), len(corpus[j]))
+            maximum_lengths[k] = max(len(vocabulary[i]), len(vocabulary[j]))
             k += 1
     
     if distances is None:
-        distances = pairwise_damerau_levenshtein_distances(corpus)
+        distances = pairwise_damerau_levenshtein_distances(vocabulary)
     
     similarities = 1 - distances/maximum_lengths.astype(dtype)
     
