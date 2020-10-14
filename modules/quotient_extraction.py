@@ -74,11 +74,10 @@ def csgraph(matrix, threshold=0.):
 def quotient_matrix(csgraph):
     n = csgraph.shape[0]
     
-    components = connected_components(csgraph, directed=False)
-    projection = dict(zip(range(n), components[1]))
+    n_components, component_labels = connected_components(csgraph, directed=False)
     
-    p = lil_matrix((n, components[0]))
-    for (i, j) in projection.items():
+    p = lil_matrix((n, n_components))
+    for (i, j) in enumerate(component_labels):
         p[i, j] = 1
     
     return csr_matrix(p, dtype=np.int64)
