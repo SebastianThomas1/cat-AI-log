@@ -39,9 +39,9 @@ Side path Data Mining:
 - [Mining 3: Construction of a replacement dictionary from DocMorris to IFA](mining/cat-AI-log_mining_3_replacement_docmorris_ifa.ipynb)
 
 Main development:
-- [Spelling correction](modules/spelling_correction.py) ([Unit tests](tests/tests_quotient_extraction.py))
-- [Search](modules/search.py) ([Unit tests](tests/tests_search.py))
-- [Quotient Extraction](modules/quotient_extraction.py) ([Unit tests](tests/tests_quotient_extraction.py))
+- [Spelling correction](modules/spelling_correction.py) ([Unit tests](unittests/tests_quotient_extraction.py))
+- [Search](modules/search.py) ([Unit tests](unittests/tests_search.py))
+- [Quotient Extraction](modules/quotient_extraction.py) ([Unit tests](unittests/tests_quotient_extraction.py))
 - [Helper](modules/ds.py)
 - [Another rough helper](modules/ds_rough.py)
 
