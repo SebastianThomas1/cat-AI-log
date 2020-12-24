@@ -25,7 +25,7 @@ def test_damerau_levenshtein_distance(debug=False):
         else:
             failures += 1
             
-    return (failures == 0, successes, failures)
+    return successes, failures
 
 
 def test_spelling_corrector(debug=False):
@@ -46,20 +46,8 @@ def test_spelling_corrector(debug=False):
         else:
             failures += 1
             
-    return (failures == 0, successes, failures)
+    return successes, failures
 
 
-def print_test_module_spelling_correction(debug=False):
-    results = [test_damerau_levenshtein_distance(debug=debug),
-               test_spelling_corrector(debug=debug)]
-    names = ['damerau_levenshtein_distance',
-             'spelling_corrector']
-
-    for result, name in zip(results, names):
-        all_passed, successes, failures = result
-        print('\033[90mTesting {}:'.format(name))
-        if failures == 0:
-            print('\033[92mAll tests passed')
-        else:
-            print('\033[92m{} tests passed'.format(successes))
-            print('\033[91m{} tests failed'.format(failures))
+tests = [test_damerau_levenshtein_distance,
+         test_spelling_corrector]

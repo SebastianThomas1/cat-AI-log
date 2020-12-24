@@ -37,7 +37,7 @@ def test_pairwise_damerau_levenshtein_distances(debug=False):
         else:
             failures += 1
     
-    return (failures == 0, successes, failures)
+    return successes, failures
 
 
 def test_pairwise_damerau_levenshtein_similarities(debug=False):
@@ -64,7 +64,7 @@ def test_pairwise_damerau_levenshtein_similarities(debug=False):
         else:
             failures += 1
         
-    return (failures == 0, successes, failures)
+    return successes, failures
 
 
 def test_symmetric_matrix(debug=False):
@@ -95,7 +95,7 @@ def test_symmetric_matrix(debug=False):
         else:
             failures += 1
         
-    return (failures == 0, successes, failures)
+    return successes, failures
 
 
 def test_csgraph(debug=False):
@@ -128,7 +128,7 @@ def test_csgraph(debug=False):
         else:
             failures += 1
        
-    return (failures == 0, successes, failures)
+    return successes, failures
 
 
 def test_quotient_matrix(debug=False):
@@ -163,7 +163,7 @@ def test_quotient_matrix(debug=False):
         else:
             failures += 1
        
-    return (failures == 0, successes, failures)
+    return successes, failures
 
 
 def test_quotient_count_vectorizer(debug=False):
@@ -201,7 +201,7 @@ def test_quotient_count_vectorizer(debug=False):
         else:
             failures += 1
        
-    return (failures == 0, successes, failures)
+    return successes, failures
 
 
 def test_quotient_tfidf_vectorizer(debug=False):
@@ -239,30 +239,13 @@ def test_quotient_tfidf_vectorizer(debug=False):
         else:
             failures += 1
        
-    return (failures == 0, successes, failures)
+    return successes, failures
 
 
-def print_test_module_quotient_extraction(debug=False):
-    results = [test_pairwise_damerau_levenshtein_distances(debug=debug),
-               test_pairwise_damerau_levenshtein_similarities(debug=debug),
-               test_symmetric_matrix(debug=debug),
-               test_csgraph(debug=debug),
-               test_quotient_matrix(debug=debug),
-               test_quotient_count_vectorizer(debug=debug),
-               test_quotient_count_vectorizer(debug=debug)]
-    names = ['pairwise_damerau_levenshtein_distances',
-             'pairwise_damerau_levenshtein_similarities',
-             'symmetric_matrix',
-             'csgraph',
-             'quotient_matrix',
-             'QuotientCountVectorizer',
-             'QuotientTfIdfVectorizer']
-
-    for result, name in zip(results, names):
-        all_passed, successes, failures = result
-        print('\033[90mTesting {}:'.format(name))
-        if failures == 0:
-            print('\033[92mAll tests passed')
-        else:
-            print('\033[92m{} tests passed'.format(successes))
-            print('\033[91m{} tests failed'.format(failures))
+tests = [test_pairwise_damerau_levenshtein_distances,
+         test_pairwise_damerau_levenshtein_similarities,
+         test_symmetric_matrix,
+         test_csgraph,
+         test_quotient_matrix,
+         test_quotient_count_vectorizer,
+         test_quotient_count_vectorizer]

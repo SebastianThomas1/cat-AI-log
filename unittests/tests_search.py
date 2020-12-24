@@ -84,18 +84,7 @@ def test_search_engine(debug=False):
         else:
             failures += 1
             
-    return (failures == 0, successes, failures)
+    return successes, failures
 
 
-def print_test_module_search(debug=False):
-    results = [test_search_engine(debug=debug)]
-    names = ['search_engine']
-
-    for result, name in zip(results, names):
-        all_passed, successes, failures = result
-        print('\033[90mTesting {}:'.format(name))
-        if failures == 0:
-            print('\033[92mAll tests passed')
-        else:
-            print('\033[92m{} tests passed'.format(successes))
-            print('\033[91m{} tests failed'.format(failures))
+tests = [test_search_engine]
