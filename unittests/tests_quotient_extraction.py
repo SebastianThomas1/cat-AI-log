@@ -8,7 +8,9 @@ import numpy as np
 
 # custom modules
 from modules.quotient_extraction import *
-from modules.general_tests import *
+
+# unit tests
+from unittests.general_tests import *
 
 
 def test_pairwise_damerau_levenshtein_distances(debug=False):

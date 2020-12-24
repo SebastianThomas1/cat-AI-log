@@ -8,7 +8,9 @@
 
 # custom modules
 from modules.spelling_correction import *
-from modules.general_tests import *
+
+# unit tests
+from unittests.general_tests import *
 
 
 def test_damerau_levenshtein_distance(debug=False):

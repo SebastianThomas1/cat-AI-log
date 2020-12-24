@@ -8,7 +8,9 @@ import numpy as np
 
 # custom modules
 from modules.search import *
-from modules.general_tests import *
+
+# unit tests
+from unittests.general_tests import *
 
 
 def test_search_engine(debug=False):
